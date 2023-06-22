@@ -1,7 +1,3 @@
-/* FUTURE IDEAS:
- * - recursively add/remove replies
- */
-
 #include <errno.h>
 #include <regex.h>
 #include <stdio.h>
@@ -23,10 +19,10 @@ typedef struct
 void
 help(int err)
 {
-    puts("Usage: 4archive [options...] <file>");
-    puts(" -a, --add <whitelist> \t\t Add posts with a comma-separated list or newline-separated file");
-    puts(" -h, --help \t\t\t Show this help message");
-    puts(" -r, --remove <blacklist> \t Remove posts with a comma-separated list or newline-separated file");
+    puts("Usage: 4archive [options...] <archive file>");
+    puts(" -f, --file <file> \t Add posts from a file with a newline-separated list");
+    puts(" -h, --help \t\t Show this help message");
+    puts(" -l, --list <list> \t Add posts with a comma-separated list");
     exit(err);
 }
 
