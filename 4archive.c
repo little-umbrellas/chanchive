@@ -6,7 +6,7 @@
 
 #define opt(short,long,x) (!strcmp(short, argv[x]) || \
                            !strcmp(long, argv[x]))
-#define MAX_POSTS 1000
+#define MAX_POSTS 1010
 #define MAX_POSTNUM 15
 
 typedef struct
