@@ -39,6 +39,9 @@ get_posts(FILE *archive)
     regmatch_t postnum[3];
 
     postoff_t *posts = malloc(sizeof(postoff_t) * MAX_POSTS);
+    if (!posts)
+        return NULL;
+
     regcomp(&reg_post, REG_POST, REG_EXTENDED);
 
     char *p_buf = buf;
@@ -166,6 +169,8 @@ parse_posts(parse_t option, char *list, postoff_t *posts)
     int *posts_index;
 
     posts_index = malloc(sizeof(int) * posts[0].np + 1);
+    if (!posts_index)
+        return NULL;
 
     if (option == PARSE_FILE && (flist = fopen(list, "r"))) 
         parse_file(flist, buf, &posts_index, posts);
@@ -197,6 +202,9 @@ top_page(FILE *archive)
     FILE *new_archive;
 
     threadid = malloc(sizeof(char) * MAX_POSTNUM + 1);
+    if (!threadid)
+        return NULL;
+
     regcomp(&we, W_END, REG_EXTENDED);
 
     char *p_buf = buf;
