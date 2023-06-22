@@ -15,7 +15,7 @@ This will also download all the images of the thread, so I strongly recommend yo
 Well, it's really simple. First, copy all the post numbers you want. Then, you have two options, either paste them all inside a file, with a newline separating each post number, or make a list and separate the post numbers by a comma. Lastly, run the damn command: 
  - From a file
 ```shell
-4archive --file <file> <archive file>
+4archive --file <path/to/file> <archive file>
 ```
  - From a list
 ```shell
