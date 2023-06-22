@@ -31,7 +31,7 @@ get_posts(FILE *archive)
 {
     char c;
     int nelc;
-    char buf[255];
+    char buf[1024];
     regex_t reg_post;
     const char REG_POST[] = "<div class=\"postContainer (reply|op)Container\" id=\"pc([0-9]+)\">";
     int offset;
@@ -167,7 +167,7 @@ parse_posts(parse_t option, char *list, postoff_t *posts)
 
     posts_index = malloc(sizeof(int) * posts[0].np + 1);
 
-    if ((option == PARSE_FILE && (flist = fopen(list, "r")))) 
+    if (option == PARSE_FILE && (flist = fopen(list, "r"))) 
         parse_file(flist, buf, &posts_index, posts);
     else if (option == PARSE_LIST)
         parse_list(list, buf, &posts_index, posts);
@@ -186,7 +186,7 @@ top_page(FILE *archive)
     char c;
     int nelc;
     regex_t we;
-    char buf[255];
+    char buf[1024];
     const char IGNORE[] = "<hr class=\"abovePostForm\">";
     //const char W_START[] = "div id=\"danbo-s-t\" class=\"danbo-slot\"";
     const char W_START[] = "<hr class=\"desktop\" id=\"op\">";
@@ -279,7 +279,7 @@ bottom_page(FILE *archive, FILE *new_archive)
 {
     char c;
     int nelc;
-    char buf[255];
+    char buf[1024];
     const char W_START[] = "<script type=\"text/javascript\" src=\"https://s.4cdn.org/js/prettify/prettify.1057.js\">";
     _Bool write;
 
