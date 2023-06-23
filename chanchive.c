@@ -19,7 +19,7 @@ typedef struct
 void
 help(int err)
 {
-    puts("Usage: 4archive [options...] <archive file>");
+    puts("Usage: chanchive [options...] <archive file>");
     puts(" -f, --file <file> \t Add posts from a file with a newline-separated list");
     puts(" -h, --help \t\t Show this help message");
     puts(" -l, --list <list> \t Add posts with a comma-separated list");
@@ -235,9 +235,9 @@ top_page(FILE *archive)
             int i;
             for (i = 0; reg_threadid[1].rm_so++ < reg_threadid[1].rm_eo; i++)
                 *p_id++ = *p_buf++;
-            threadid = realloc(threadid, sizeof(char) * (i + sizeof(".new")));
-            for (char *new = ".new"; *new; new++)
-                *p_id++ = *new;
+            threadid = realloc(threadid, sizeof(char) * (i + sizeof(".new.html")));
+            for (char *ext = ".new.html"; *ext; ext++)
+                *p_id++ = *ext;
             *p_id = '\0';
             break;
         }
@@ -288,7 +288,7 @@ bottom_page(FILE *archive, FILE *new_archive)
     char c;
     int nelc;
     char buf[1024];
-    const char W_START[] = "<script type=\"text/javascript\" src=\"https://s.4cdn.org/js/prettify/prettify.1057.js\">";
+    const char W_START[] = "<div id=\"bottom\">";
     _Bool write;
 
     char *p_buf = buf;
