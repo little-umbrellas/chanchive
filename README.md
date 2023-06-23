@@ -2,7 +2,14 @@
 Modify a local archive of a 4chan thread.
 
 ## Installation
-Just clone the repo and put the binary in a directory from your $PATH. If you're on windows then I don't know, figure it out yourself. 
+1. Compile the program
+```shell
+gcc -o 4archive 4archive.c
+```
+2. Move the binary to a directory in your $PATH
+```shell
+mv 4archive /usr/bin
+```
 
 ## Setup
 This program only modifies an already existing archive. To get a local archive of a thread you'll need to get the HTML of the thread, preferably with wget. Here's how to do it with wget:
