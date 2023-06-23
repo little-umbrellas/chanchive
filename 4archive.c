@@ -367,7 +367,7 @@ modify_archive(parse_t option, char *list, char *pathname)
     add_posts(posts, posts_index, archive, new_archive);
 
     if (bottom_page(archive, new_archive) == -1) { 
-        fprintf(stderr, "bottom_page() failed: %s\n", strerror(errno));
+        fputs("bottom_page() failed: Missing HTML element", stderr);
         res = 1;
     }
 
