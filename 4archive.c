@@ -322,6 +322,9 @@ bottom_page(FILE *archive, FILE *new_archive)
         nelc = 0;
     }
 
+    if (!write)
+        return -1;
+
     rewind(archive);
     rewind(new_archive);
 
