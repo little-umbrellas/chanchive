@@ -77,7 +77,6 @@ get_posts(FILE *archive)
     }
 
     regfree(&reg_post);
-    rewind(archive);
 
     if (!nposts) {
         free(posts);
@@ -87,16 +86,18 @@ get_posts(FILE *archive)
     posts = realloc(posts, sizeof(postoff_t) * nposts);
     posts[0].np = nposts;
 
+    rewind(archive);
+
     return posts;
 }
 
 void
-parse_file(FILE *flist, char *buf, int **posts_index, postoff_t *posts)
+parse_file(FILE *flist, char *buf, int **p_posts_index, postoff_t *posts)
 {
     char c;
 
     char *p_buf = buf;
-    int *p_postIn = *posts_index;
+    int *p_postIn = *p_posts_index;
 
     for (int nc = 0; (c = fgetc(flist)) != EOF; nc++) {
         if (c != '\n' && nc < MAX_POSTNUM) {
@@ -126,11 +127,11 @@ parse_file(FILE *flist, char *buf, int **posts_index, postoff_t *posts)
 }
 
 void
-parse_list(char *list, char *buf, int **posts_index, postoff_t *posts)
+parse_list(char *list, char *buf, int **p_posts_index, postoff_t *posts)
 {
     char *p_buf = buf;
     char *p_list = list;
-    int *p_postIn = *posts_index;
+    int *p_postIn = *p_posts_index;
 
     for (int nc = 0; *p_list; nc++, p_list++) {
         if (*p_list != ',' && nc < MAX_POSTNUM && *(p_list+1)) {
@@ -168,8 +169,8 @@ parse_posts(parse_t option, char *list, postoff_t *posts)
     char buf[MAX_POSTNUM];
     int *posts_index;
 
-    posts_index = malloc(sizeof(int) * posts[0].np + 1);
-    if (!posts_index)
+    posts_index = malloc(sizeof(int) * (posts[0].np + 1));
+    if (!posts_index) 
         return NULL;
 
     if (option == PARSE_FILE && (flist = fopen(list, "r"))) 
@@ -179,8 +180,10 @@ parse_posts(parse_t option, char *list, postoff_t *posts)
     else
         return NULL;
 
-    if (!posts_index[0])
+    if (!posts_index[0]) {
+        free(posts_index);
         return NULL;
+    }
     
     return posts_index;
 }
@@ -201,7 +204,7 @@ top_page(FILE *archive)
     char *threadid;
     FILE *new_archive;
 
-    threadid = malloc(sizeof(char) * MAX_POSTNUM + 1);
+    threadid = malloc(sizeof(char) * (MAX_POSTNUM + 1));
     if (!threadid)
         return NULL;
 
@@ -367,7 +370,7 @@ modify_archive(parse_t option, char *list, char *pathname)
     add_posts(posts, posts_index, archive, new_archive);
 
     if (bottom_page(archive, new_archive) == -1) { 
-        fputs("bottom_page() failed: Missing HTML element", stderr);
+        fputs("bottom_page() failed: Missing HTML element\n", stderr);
         res = 1;
     }
 
